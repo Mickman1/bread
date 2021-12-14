@@ -1,3 +1,5 @@
+// Old download function, deprecated by chrome.downloads.download
+// Creates element with href for video link, then immediately clicks it
 function download(filename, videoURL) {
 	let url = videoURL.split('?')[0]
 
@@ -16,31 +18,39 @@ function download(filename, videoURL) {
 		})
 }
 
+// Get current tab
 chrome.tabs.getSelected(null, function(tab) {
 	var xhr = new XMLHttpRequest()
+	// Listen for response following POST request to Bread server
 	xhr.onreadystatechange = function() {
 		if (xhr.readyState === XMLHttpRequest.DONE) {
-			let errorMessage = ''
+			let updatedDownloadMessage = ''
 
 			// Check for HTTP status code of POST request
 			switch (xhr.status) {
 				case 200:
-					download('filename.mp4', xhr.responseText)
+					chrome.downloads.download({
+						// If user has custom filename setting
+						//filename: 'vid.mp4',
+						url: xhr.responseText,
+					})
+					// When chrome begins processing the download request
+					document.getElementById('download-header').innerHTML = 'Downloading...'
 					return;
 				case 422:
 					// Requested link / media cannot be processed
-					errorMessage = 'Download Error!'
+					updatedDownloadMessage = 'Download Error!'
 					break
 				case 0:
 					// Express server not running
-					errorMessage = 'Bread Server Offline!'
+					updatedDownloadMessage = 'Bread Server Offline!'
 					break
 			}
-			document.getElementById('download-header').innerHTML = errorMessage
+			document.getElementById('download-header').innerHTML = updatedDownloadMessage
 			document.getElementById('bread-logo').src = './assets/icon_red.png'
 		}
 	}
-	xhr.open('POST', 'https://mickman.tech/node', true)
+	xhr.open('POST', 'https://mackmin.me/node', true)
 	xhr.setRequestHeader('Content-Type', 'application/json')
 	xhr.setRequestHeader('Access-Control-Allow-Origin', '*')
 	xhr.send(JSON.stringify({
