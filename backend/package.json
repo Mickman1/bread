@@ -15,6 +15,10 @@
     "cors": "^2.8.5",
     "express": "^4.17.1",
     "ffmpeg": "0.0.4",
-    "twitter": "^1.7.1"
+    "fluent-ffmpeg": "^2.1.2",
+    "node-fetch": "^2.6.1",
+    "snoowrap": "^1.23.0",
+    "twitter": "^1.7.1",
+    "ytdl-core": "^4.8.3"
   }
 }
