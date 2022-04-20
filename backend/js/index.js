@@ -61,7 +61,7 @@ function combineVideoAndAudio(videoURL, audioURL, fileName) {
 
 	if (fs.existsSync(`/var/www/html/reddit/${fileName}.mp4`)) {
 		console.log('File Exists!')
-		return `https://mackmin.me/reddit/${fileName}.mp4`;
+		return `https://mickbot.com/reddit/${fileName}.mp4`;
 	}
 	// Using spawn to run FFmpeg CLI command to combine DASH_1080 and DASH_audio
 	var spawn = require('child_process').spawn
@@ -84,7 +84,7 @@ function combineVideoAndAudio(videoURL, audioURL, fileName) {
 	proc.stderr.setEncoding('utf8')
 
 	return new Promise(resolve => {
-		proc.on('close', () => resolve(`https://mackmin.me/reddit/${fileName}.mp4`))
+		proc.on('close', () => resolve(`https://mickbot.com/reddit/${fileName}.mp4`))
 	});
 }
 

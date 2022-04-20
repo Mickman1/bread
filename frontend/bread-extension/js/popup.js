@@ -50,7 +50,7 @@ chrome.tabs.getSelected(null, function(tab) {
 			document.getElementById('bread-logo').src = './assets/icon_red.png'
 		}
 	}
-	xhr.open('POST', 'https://mackmin.me/node', true)
+	xhr.open('POST', 'https://mickbot.com/node', true)
 	xhr.setRequestHeader('Content-Type', 'application/json')
 	xhr.setRequestHeader('Access-Control-Allow-Origin', '*')
 	xhr.send(JSON.stringify({
