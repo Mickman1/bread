@@ -1,9 +1,6 @@
 async function getTweet(id) {
 	return twitterClient.get('statuses/show', { id, tweet_mode:'extended' })
 	.then(function (tweet) {
-		//console.log(tweet.extended_entities.media[0].video_info.variants[0].url)
-		//console.log(JSON.stringify(tweet, null, 4))
-
 		// Determine Twitter post type: Video or GIF
 		switch (tweet.extended_entities.media[0].type) {
 			case 'video':
@@ -14,7 +11,6 @@ async function getTweet(id) {
 		}
   })
   .catch(function (error) {
-		//throw error
 		return 'no_post';
 	})
 }
@@ -153,24 +149,23 @@ async function determineService(requestDomain, requestURL) {
 			var redditAudioURL = redditPostLink + '/DASH_audio.mp4'
 			var responseURL = await combineVideoAndAudio(redditVideoURL, redditAudioURL, redditFileName)
 			return responseURL;
-		case 'www.youtube.com':
+		/*case 'www.youtube.com':
 			console.log('\nDomain: YouTube')
 
 			var responseURL = await getYouTubeVideo(requestURL)
 
-			return responseURL;
+			return responseURL;*/
 		default:
 			console.log('\nDomain: Other')
 			// Include 422 Error for other domain
-			return;
+			responseURL = 'no_post'
+			return responseURL;
 	}
-
-	//console.log(object)
 }
 
 const getHostnameFromRegex = (url) => {
-  const matches = url.match(/^https?\:\/\/([^\/?#]+)(?:[\/?#]|$)/i)
   // Extract hostname (will be null if no match is found)
+  const matches = url.match(/^https?\:\/\/([^\/?#]+)(?:[\/?#]|$)/i)
   return matches && matches[1];
 }
 
@@ -193,12 +188,8 @@ async function startServer() {
 			return res.status(400).end('no_url');
 		}
 
-		//let url = await getTweet(req.body.id)
 		let requestDomain = getHostnameFromRegex(req.body.url)
 		let responseURL = await determineService(requestDomain, req.body.url)
-
-		//if (responseURL)
-		//console.log(req.body.url)
 
 		if (responseURL === 'no_post') {
 			return res.status(422).end('no_post');
@@ -216,6 +207,5 @@ const twitterClient = getTwitterClient()
 //const redditClient = getRedditClient()
 //const youTubeClient = getYouTubeClient()
 const fs = require('fs')
-//redditClient.getSubmission('o7h5lh').url.then(post => console.log(post))
 
 startServer()
