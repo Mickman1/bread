@@ -47,10 +47,10 @@ chrome.tabs.getSelected(null, function(tab) {
 					break
 			}
 			document.getElementById('download-header').innerHTML = updatedDownloadMessage
-			document.getElementById('bread-logo').src = './assets/icon_red.png'
+			document.getElementById('bread-logo').src = './assets/icon_burnt.png'
 		}
 	}
-	xhr.open('POST', 'https://mickbot.com/node', true)
+	xhr.open('POST', 'https://mickbot.com/bread', true)
 	xhr.setRequestHeader('Content-Type', 'application/json')
 	xhr.setRequestHeader('Access-Control-Allow-Origin', '*')
 	xhr.send(JSON.stringify({
