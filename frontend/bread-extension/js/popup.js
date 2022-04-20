@@ -19,7 +19,7 @@ function download(filename, videoURL) {
 }
 
 // Get current tab
-chrome.tabs.getSelected(null, function(tab) {
+chrome.tabs.query({ active: true, currentWindow: true }, function(tab) {
 	var xhr = new XMLHttpRequest()
 	// Listen for response following POST request to Bread server
 	xhr.onreadystatechange = function() {
@@ -37,7 +37,7 @@ chrome.tabs.getSelected(null, function(tab) {
 					// When chrome begins processing the download request
 					document.getElementById('download-header').innerHTML = 'Downloading...'
 					return;
-				case 422:
+				case 422: case 400:
 					// Requested link / media cannot be processed
 					updatedDownloadMessage = 'Download Error!'
 					break
@@ -54,6 +54,6 @@ chrome.tabs.getSelected(null, function(tab) {
 	xhr.setRequestHeader('Content-Type', 'application/json')
 	xhr.setRequestHeader('Access-Control-Allow-Origin', '*')
 	xhr.send(JSON.stringify({
-		url: tab.url
+		url: tab[0].url
 	}))
 })
