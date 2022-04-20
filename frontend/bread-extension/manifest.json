@@ -3,8 +3,7 @@
 
 	"name": "Bread",
 	"description": "Easy video downloading!",
-	"version": "1.1",
-	"options_page": "options.html",
+	"version": "1.2",
 
 	"action": {
 		"default_icon": {
@@ -21,7 +20,6 @@
 	},
 	"permissions": [
 		"activeTab",
-		"downloads",
-		"storage"
+		"downloads"
 	]
 }
