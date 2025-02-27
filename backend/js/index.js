@@ -9,8 +9,8 @@ async function getTweet(id) {
 			case 'animated_gif':
 				return tweet.extended_entities.media[0].video_info.variants[0].url;
 		}
-  })
-  .catch(function (error) {
+	})
+	.catch(function (error) {
 		return 'no_post';
 	})
 }
@@ -164,9 +164,9 @@ async function determineService(requestDomain, requestURL) {
 }
 
 const getHostnameFromRegex = (url) => {
-  // Extract hostname (will be null if no match is found)
-  const matches = url.match(/^https?\:\/\/([^\/?#]+)(?:[\/?#]|$)/i)
-  return matches && matches[1];
+	// Extract hostname (will be null if no match is found)
+	const matches = url.match(/^https?\:\/\/([^\/?#]+)(?:[\/?#]|$)/i)
+	return matches && matches[1];
 }
 
 async function startServer() {
